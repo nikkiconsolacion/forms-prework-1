@@ -8,12 +8,19 @@
   </head>
   <body>
     <form>
-      <input name="foo" /><br><br>
+      <input name="foo" placeholder="enter foo value"/><br><br>
       <button diabled='disabled'>Save</button>
 
     </form>
     <script>
       const form = document.querySelector('form');
+      const input = document.querySelector('input[name="foo]');
+      // addEventListener while user is adding text to input foo
+      input.addEventListener('keyup', (ev) => {
+        console.log(ev.target.value);
+      })
+
+      console.log(input);
       form.addEventListener('submit', (ev) => {
         ev.preventDefault();
         console.log('do something else');
