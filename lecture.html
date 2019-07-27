@@ -10,7 +10,20 @@
 
     <script>
       const colorList = document.querySelector('#colorList');
-      let chosenCOlors = ['red', 'green'];
+      let chosenColors = ['red', 'green'];
+
+      const render = () => {
+        const html = chosenColors.map(color => {
+          return `
+          <li style='background-color:${color}'>
+            ${color}
+            </li>
+          `;
+        }).join('');
+        colorList.innderHTML = html;
+      };
+
+      render();
     </script>
   </body>
 </html>
