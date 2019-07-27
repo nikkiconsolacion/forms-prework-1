@@ -4,20 +4,34 @@
       input {
         height: 3rem
       }
+      #error {
+        color: red;
+        font-size: 1rem;
+      }
     </style>
   </head>
   <body>
     <form>
       <input name="foo" placeholder="enter foo value"/><br><br>
       <button diabled='disabled'>Save</button>
+      <div id="error"></div>
 
     </form>
     <script>
       const form = document.querySelector('form');
       const input = document.querySelector('input[name="foo]');
+      const errorMessage = document.querySelector('#error');
       // addEventListener while user is adding text to input foo
       input.addEventListener('keyup', (ev) => {
-        console.log(ev.target.value);
+        //console.log(ev.target.value); // value of what the user is typing
+        // if user doesn't input text after starting to type, fill errorMessage div with message
+        if (!ev.target.value) {
+          errorMessage.innerHTML = 'value for foo is required';
+        }
+        // else make message go away when user starts typing
+        else {
+          errorMessage.innerHTML = '';
+        }
       })
 
       console.log(input);
