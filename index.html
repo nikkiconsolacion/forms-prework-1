@@ -21,16 +21,19 @@
       const form = document.querySelector('form');
       const input = document.querySelector('input[name="foo]');
       const errorMessage = document.querySelector('#error');
+      const button = document.querySelector('button');
       // addEventListener while user is adding text to input foo
       input.addEventListener('keyup', (ev) => {
         //console.log(ev.target.value); // value of what the user is typing
-        // if user doesn't input text after starting to type, fill errorMessage div with message
+        // if user doesn't input text after starting to type, fill errorMessage div with message. && disable button
         if (!ev.target.value) {
           errorMessage.innerHTML = 'value for foo is required';
+          button.setAttribute('disabled', 'disabled');
         }
-        // else make message go away when user starts typing
+        // else make message go away when user starts typing && enable button
         else {
           errorMessage.innerHTML = '';
+          button.removeAttribute('disabled');
         }
       })
 
