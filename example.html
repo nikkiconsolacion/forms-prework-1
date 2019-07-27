@@ -18,10 +18,14 @@ body {
 
   </head>
   <body>
+
     <div id='lightContainer'></div>
+
     <form>
       <h1>Please Turn the Lights On</h1>
-      <label>On<input type='checkbox' name='checked_switch'/>
+      <label>On
+        <input type='checkbox' name='checked_switch'/>
+
       <div>
         <label>On
           <input type='radio' value='yes' name='radio_switch'/>
@@ -30,13 +34,16 @@ body {
           <input type='radio' value='no' name='radio_switch'/>
         </label>
       </div>
+
       <div>
         <select name='select_switch'>
           <option value='no'>No</option>
           <option value='yes'>Yes</option>
         </select>
       </div>
+
     </form>
+
   <script>
     const lightContainer = document.querySelector('#lightContainer');
     const checkBox = document.querySelector('input[name="checked_switch"]');
@@ -61,6 +68,7 @@ body {
     let lightOn = false;
 
     const compute = ()=> {
+      // if all input fields are true, checkbox selected, radio on, select yes, then lightOn = true;
       lightOn = checkBox.checked && radio.value === 'yes' && select.value === 'yes';
     };
 
