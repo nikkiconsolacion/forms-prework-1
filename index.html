@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <style>
+      input {
+        height: 3rem
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input name="foo" /><br><br>
+      <button>Save</button>
+
+    </form>
+    <script>
+      const form = document.querySelector('form');
+      form.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        console.log('do something else');
+      })
+    </script>
+  </body>
+</html>
