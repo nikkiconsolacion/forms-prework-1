@@ -1,6 +1,15 @@
 <html>
   <head>
-
+    <style>
+      body {
+        font-family: verdana;
+      }
+      li {
+        height: 2rem;
+        font-size: 1.5rem;
+        color:white;
+      }
+    </style>
   </head>
   <body>
     <h1>Color Picker</h1>
@@ -12,10 +21,20 @@
       const colorList = document.querySelector('#colorList');
       let chosenColors = ['red', 'green'];
 
+      colorList.addEventListener('click', (ev)=> {
+        if(ev.target.tagName === 'LI') {
+          const idx = ev.target.getAttribute('data-idx')*1; //tell js it's a number, not a str
+          chosenColors = chosenColors.filter((color, _idx)=> {
+            return _idx !== idx;
+          });
+          render();
+        }
+      })
+
       const render = () => {
-        const html = chosenColors.map(color => {
+        const html = chosenColors.map((color, idx) => {
           return `
-          <li style='background-color:${color}'>
+          <li style='background-color:${color}' data-idx='${idx}'>
             ${color}
             </li>
           `;
