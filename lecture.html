@@ -19,7 +19,7 @@
     <h1>Color Picker</h1>
     <form id="colorForm">
       <input name='color' />
-      <button disabled="disabled">Add Color</button>
+      <button id="colorButton">Add Color</button>
     </form>
     <a href='/' id='resetLink'>Reset</a>
     <ul id="colorList">
@@ -55,6 +55,7 @@
       colorForm.addEventListener('submit', ev => {
         ev.preventDefault();
         chosenColors.push(colorInput.value);
+        render(); //why here but not on other event listeners?
       })
 
       // display and remove items
