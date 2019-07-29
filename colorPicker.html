@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: verdana;
+      }
+      input,button {
+        height: 2rem;
+        width: 100%;
+      }
+      li {
+        height: 2rem;
+        font-size: 1.5rem;
+        color:white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Color Picker</h1>
+    <form id="colorForm">
+      <input name='color' />
+      <button id="colorButton">Add Color</button>
+    </form>
+    <a href='/' id='resetLink'>Reset</a>
+    <ul id="colorList">
+
+    </ul>
+
+    <script>
+      const colorList = document.querySelector('#colorList');
+      const colorInput = document.querySelector('[name="color"]');
+      const colorForm = document.querySelector('#colorForm');
+      const colorButton = document.querySelector('#colorButton');
+      const resetLink = document.querySelector('#resetLink');
+
+      let chosenColors = ['red', 'green'];
+      const colors = ['red', 'blue', 'green'];
+
+      resetLink.addEventListener('click', (ev)=> {
+        ev.preventDefault();
+        render();
+        colorButton.removeAttribute("disabled");
+      });
+
+      //disable button for invalid colors
+      colorInput.addEventListener('keyup', (ev)=> {
+        if(colors.includes(ev.target.value)) {
+          colorButton.removeAttribute("disabled");
+        }
+        else {
+          colorButton.setAttribute("disabled", "disabled");
+        }
+      })
+
+      colorForm.addEventListener('submit', ev => {
+        ev.preventDefault();
+        chosenColors.push(colorInput.value);
+        render(); //why here but not on other event listeners?
+      })
+
+      // display and remove items
+      colorList.addEventListener('click', (ev)=> {
+        if(ev.target.tagName === 'LI') {
+          // const idx = ev.target.getAttribute('data-idx')*1; //tell js it's a number, not a str
+          const idx = [...ev.target.parentNode.children].indexOf(ev.target);
+          chosenColors = chosenColors.filter((color, _idx)=> {
+            return _idx !== idx;
+          });
+          render();
+        }
+      })
+
+      const render = () => {
+        const html = chosenColors.map((color, idx) => {
+          return `
+          <li style='background-color:${color}' data-idx='${idx}'>
+            ${color}
+            </li>
+          `;
+        }).join('');
+        colorList.innerHTML = html;
+        const rnd = Math.floor(Math.random()*colors.length); // random number, but as a whole integer
+        color = colors[rnd]; //random color
+        colorInput.value = color;
+      };
+
+      render();
+    </script>
+  </body>
+</html>
