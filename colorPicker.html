@@ -13,17 +13,24 @@
         font-size: 1.5rem;
         color:white;
       }
+      #errorLabel {
+        color: red;
+      }
     </style>
   </head>
   <body>
     <h1>Color Picker</h1>
-    <form id="colorForm">
-      <input name='color' />
-      <button id="colorButton">Add Color</button>
-    </form>
-    <a href='/' id='resetLink'>Reset</a>
-    <ul id="colorList">
 
+    <form id='colorForm'>
+      <input name='color' />
+      <button id='colorButton'>Add Color</button>
+    </form>
+
+    <div id='errorLabel'></div>
+    <a href='/' id='resetLink'>Reset</a>
+
+    <ul id='colorList'>
+    <!-- updated with render -->
     </ul>
 
     <script>
@@ -32,37 +39,41 @@
       const colorForm = document.querySelector('#colorForm');
       const colorButton = document.querySelector('#colorButton');
       const resetLink = document.querySelector('#resetLink');
+      const errorLabel = document.querySelector('#errorLabel');
 
-      let chosenColors = ['red', 'green'];
-      const colors = ['red', 'blue', 'green'];
+      let chosenColors = ['red', 'green']; // colors that user wants to keep in list. Note using let instead of const
+      const colors = ['red', 'blue', 'green']; // valid colors
 
       resetLink.addEventListener('click', (ev)=> {
-        ev.preventDefault();
-        render();
-        colorButton.removeAttribute("disabled");
+        ev.preventDefault(); // doesn't link to anywhere
+        render(); // update colorList <ul>
+        colorButton.removeAttribute("disabled"); //enable button
       });
 
       //disable button for invalid colors
       colorInput.addEventListener('keyup', (ev)=> {
         if(colors.includes(ev.target.value)) {
           colorButton.removeAttribute("disabled");
+          errorLabel.innerHTML = '';
         }
         else {
-          colorButton.setAttribute("disabled", "disabled");
+          colorButton.setAttribute("disabled", "disabled"); // same as <button disabled="disabled">
+          errorLabel.innerHTML = 'Bad value';
         }
       })
 
       colorForm.addEventListener('submit', ev => {
         ev.preventDefault();
         chosenColors.push(colorInput.value);
-        render(); //why here but not on other event listeners?
+        render(); // update colorList
       })
 
-      // display and remove items
+      //  remove items in colorList
       colorList.addEventListener('click', (ev)=> {
         if(ev.target.tagName === 'LI') {
           // const idx = ev.target.getAttribute('data-idx')*1; //tell js it's a number, not a str
           const idx = [...ev.target.parentNode.children].indexOf(ev.target);
+          // Note [...ev.target.parentNode.children] is building an array from all the <li>'s under the <ul>
           chosenColors = chosenColors.filter((color, _idx)=> {
             return _idx !== idx;
           });
@@ -70,13 +81,14 @@
         }
       })
 
+      //render will update the <ul id='colorList'> with <li>'s
       const render = () => {
         const html = chosenColors.map((color, idx) => {
           return `
           <li style='background-color:${color}' data-idx='${idx}'>
             ${color}
             </li>
-          `;
+          `; //idx is not a built in attribute which is why we put 'data-'idx and find the idx above
         }).join('');
         colorList.innerHTML = html;
         const rnd = Math.floor(Math.random()*colors.length); // random number, but as a whole integer
@@ -84,7 +96,7 @@
         colorInput.value = color;
       };
 
-      render();
+      render(); // Always render at the bottom
     </script>
   </body>
 </html>
